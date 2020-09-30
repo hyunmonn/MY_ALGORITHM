@@ -4,7 +4,7 @@
 #include <fstream>
 
 
-//Á¦ÀÛÇÔ
+//ì œì‘í•¨
 void get_name_list(char* name_file, int& names_size,char** names)
 {
 	std::ifstream readfile;
@@ -24,7 +24,7 @@ void get_name_list(char* name_file, int& names_size,char** names)
 }
 
 
-//º¹ºÙÇÔ
+//ë³µë¶™í•¨
 void calloc_error()
 {
 	fprintf(stderr, "Calloc error\n");
@@ -244,7 +244,7 @@ void embed_image(image source, image dest, int dx, int dy)
 	}
 }
 
-//°ÅÀÇ º¹ºÙ..
+//ê±°ì˜ ë³µë¶™..
 void draw_detections_v3_custom(image im, detection* dets, int num, float thresh, char** names, /*image** alphabet,*/ int classes, int ext_output, My_Data &my_data)
 {
 	static int frame_id = 0;
@@ -324,7 +324,7 @@ void draw_detections_v3_custom(image im, detection* dets, int num, float thresh,
 			m_b.h = b.h;
 			my_data.boxes.push_back(m_b);
 		}
-		if (/*alphabet*/0) {//------- 1ÇØµµ °á°ú´Â °°À½
+		if (/*alphabet*/0) {//------- 1í•´ë„ ê²°ê³¼ëŠ” ê°™ìŒ
 			char labelstr[4096] = { 0 };
 			strcat(labelstr, names[selected_detections[i].best_class]);
 			int j;
@@ -338,7 +338,7 @@ void draw_detections_v3_custom(image im, detection* dets, int num, float thresh,
 			//draw_label(im, top + width, left, /*label*/im, rgb);			
 			//free_image(label);
 		}
-		if (selected_detections[i].det.mask) {//½ÇÇà x
+		if (selected_detections[i].det.mask) {//ì‹¤í–‰ x
 			image mask = float_to_image(14, 14, 1, selected_detections[i].det.mask);
 			image resized_mask = resize_image(mask, b.w * im.w, b.h * im.h);
 			image tmask = threshold_image(resized_mask, .5);
@@ -417,7 +417,7 @@ void draw_detections_v3_custom(image im, detection* dets, int num, float thresh,
 		if (top < 0) top = 0;
 		if (bot > im.h - 1) bot = im.h - 1;
 
-		//Ãß°¡
+		//ì¶”ê°€
 		iou_box my_box;
 
 		my_box.left_x = left;
@@ -560,8 +560,8 @@ bool MY_ALGORITHM::init(int gpu_index, char* names_file, char* cfg_file, char* w
 		fuse_conv_batchnorm(*m_net);
 		calculate_binary_weights(*m_net);
 
-		m_names = (char**)malloc(sizeof(char*) * 80); //ÃÖ´ë nameÀº 80°³·Î Àâ¾Æ³õÀ½
-		for (int i = 0; i < 80; i++) //nameÀÇ ÀÌ¸§ ±æÀÌ´Â 256À» ³ÑÀ¸¸é ¾È µÊ
+		m_names = (char**)malloc(sizeof(char*) * 80); //ìµœëŒ€ nameì€ 80ê°œë¡œ ì¡ì•„ë†“ìŒ
+		for (int i = 0; i < 80; i++) //nameì˜ ì´ë¦„ ê¸¸ì´ëŠ” 256ì„ ë„˜ìœ¼ë©´ ì•ˆ ë¨
 			m_names[i] = (char*)malloc(sizeof(char) * 256);
 
 		get_name_list(name_file, names_size, m_names);
@@ -609,7 +609,7 @@ cv::Mat MY_ALGORITHM::Detect_Image_File(char * image_file)
 		
 		//load_image(image_file, 0, 0,net->c); //file_path, resize_widht, resize_height 
 		
-		CV_Assert(!mat.empty()); // emptyÀÏ °æ¿ì Error , ³»ºÎ°¡ falseÀÏ °æ¿ì
+		CV_Assert(!mat.empty()); // emptyì¼ ê²½ìš° Error , ë‚´ë¶€ê°€ falseì¼ ê²½ìš°
 		
 		image im = mat_to_image(mat);
 
@@ -659,7 +659,7 @@ My_Data MY_ALGORITHM::Detect_Image(cv::Mat f)
 		//thresh, hier_thresh
 		float thresh = 0.25, hier_thresh = 0.5;
 
-		CV_Assert(!f.empty()); // emptyÀÏ °æ¿ì Error , ³»ºÎ°¡ falseÀÏ °æ¿ì
+		CV_Assert(!f.empty()); // emptyì¼ ê²½ìš° Error , ë‚´ë¶€ê°€ falseì¼ ê²½ìš°
 
 		image im = mat_to_image(f);
 
@@ -701,7 +701,7 @@ My_Data MY_ALGORITHM::Detect_Image(cv::Mat f)
 void view(cv::Mat m)
 {
 	cv::imshow("tt", m);
-	cv::waitKey(1); //0=¹«ÇÑ
+	cv::waitKey(1); //0=ë¬´í•œ
 }
 
 
@@ -721,7 +721,7 @@ void MY_ALGORITHM::DetectVideo(char * video_file)
 	bool isOpen;
 	cv::Mat returnMat;
 
-	if (!strcmp(video_file,"CAM")) //È®ÀÎÇÊ¿ä
+	if (!strcmp(video_file,"CAM")) //í™•ì¸í•„ìš”
 	{
 		std::cout << "Reading From CAM : 0" << std::endl;
 		
@@ -799,31 +799,31 @@ float GetIOU(iou_box box1, iou_box box2)
 
 void PredictedType(std::vector<iou_box> boxes1, std::vector<iou_box> boxes2, unsigned int pType[4])
 { 
-	//Á¤·ÄÀÌ Á¦´ë·Î µÇ¾îÀÖ´Â Á¶°Ç - ÀÌ¹ø °æ¿ì¸¸ »ç¿ëÇÑ´Ù.!!
-		
-	//±âÁØ °ª
+	//ì •ë ¬ì´ ì œëŒ€ë¡œ ë˜ì–´ìˆëŠ” ì¡°ê±´ì´ì–´ì•¼ í•©ë‹ˆë‹¤!!		
+	//ê¸°ì¤€ ê°’ì€ ì •í•˜ê¸° ë‚˜ë¦„ì…ë‹ˆë‹¤.
 	float threshold = 0.8f;
 
-	//boxes1Àº Á¤´ä ¹Ú½º·Î °£ÁÖÇÑ´Ù.
-	//unsigned int pType[4] = { 0 }; //TP,FP,FN,TN
+	//boxes1ì„ ì •ë‹µ ë°•ìŠ¤ë¡œ ê°„ì£¼í•©ë‹ˆë‹¤!!
 
+    //ì •ë‹µ ë°•ìŠ¤ê°€ ì˜ˆì¸¡ ë°•ìŠ¤ë³´ë‹¤ ë§ì„ ê²½ìš° = ì˜ˆì¸¡ì„ ë‹¤ëª»í•œ ê²½ìš°
 	if (boxes1.size() > boxes2.size())
-	{//Á¤´ä ¹Ú½º°¡ ¿¹Ãø ¹Ú½ºº¸´Ù ¸¹À» °æ¿ì
-		//False negative ½ÇÁ¦ °á°ú´Â ÂüÀÎµ¥, °ÅÁşÀ¸·Î Ãß·ĞÇÔ (Ãß·ĞÇÏÁö ¸øÇÔ)
+	{   
+		//False negative ì‹¤ì œ ê²°ê³¼ëŠ” ì°¸ì¸ë°, ê±°ì§“ìœ¼ë¡œ ì¶”ë¡ í•¨ (ì¶”ë¡ í•˜ì§€ ëª»í•¨)
 		pType[FN] += boxes1.size() - boxes2.size();
 
+        //ì˜ˆì¸¡í•œ ë°•ìŠ¤ë“¤ ì¤‘ì—ì„œë„ ì˜ëª» ëœ ê°’ì¸ì§€ í™•ì¸
 		for (int i = 0; i < boxes2.size(); i++)
 		{
 			if (GetIOU(boxes1[i], boxes2[i]) >= threshold)
 			{
 				pType[TP] += 1;
 			}
-			else pType[FN] += 1;
+			else pType[FP] += 1;
 		}
 	}
+    //ì˜ˆì¸¡í•œ ë°•ìŠ¤ê°€ ì •ë‹µë°•ìŠ¤ë³´ë‹¤ ë§ì„ ê²½ìš°
 	else if (boxes1.size() < boxes2.size())
-	{//¿¹ÃøÇÑ ¹Ú½º°¡ Á¤´ä¹Ú½ºº¸´Ù ¸¹À» °æ¿ì
-
+	{
 		pType[FP] += boxes2.size() - boxes1.size();
 
 		for (int i = 0; i < boxes1.size(); i++)
@@ -836,9 +836,9 @@ void PredictedType(std::vector<iou_box> boxes1, std::vector<iou_box> boxes2, uns
 		}
 	}
 	else
-	{//µ¿ÀÏÇÑ °ªÀÏ °æ¿ì
-		// ¸¸¾à µÑ ´Ù 0,0,0,0ÀÌ¸é TN
-		// È¤Àº IOU·Î È®ÀÎ
+	{   //ë™ì¼í•œ ê°’ì¼ ê²½ìš°
+		// ë§Œì•½ ë‘˜ ë‹¤ 0,0,0,0ì´ë©´ TN = ì˜³ê²Œ ê²€ì¶œë˜ì§€ ì•Šì€ ê°’
+		// í˜¹ì€ IOUë¡œ í™•ì¸
 		for (int i = 0; i < boxes1.size(); i++)
 		{
 			if (((boxes1[i].left_x == 0.0f) && (boxes1[i].right_x == 0.0f) && (boxes1[i].top_y == 0.0f) && (boxes1[i].bot_y == 0.0f))
@@ -852,7 +852,7 @@ void PredictedType(std::vector<iou_box> boxes1, std::vector<iou_box> boxes2, uns
 			{
 				pType[TP] += 1;
 			}
-			else pType[FN] += 1;
+			else pType[FP] += 1;
 		}
 	}
 		
@@ -860,9 +860,10 @@ void PredictedType(std::vector<iou_box> boxes1, std::vector<iou_box> boxes2, uns
 	return;
 }
 
+
 void MY_ALGORITHM::ReadBoxfile(char* boxfile1, char* boxfile2)
 {
-	iou_box boxes1[125][2] = { 0, }; //¾ß¸Å·Î ÇÏÀÚ ¾ß¸Å·Î
+	iou_box boxes1[125][2] = { 0, }; //ì•¼ë§¤ë¡œ í•˜ì ì•¼ë§¤ë¡œ
 	iou_box boxes2[125][2] = { 0, };
 
 	char* pch;
@@ -1009,7 +1010,7 @@ std::vector<iou_box> MY_ALGORITHM::Detect_Image_for_IOU(cv::Mat f)
 		//thresh, hier_thresh
 		float thresh = 0.25, hier_thresh = 0.5;
 
-		CV_Assert(!f.empty()); // emptyÀÏ °æ¿ì Error , ³»ºÎ°¡ falseÀÏ °æ¿ì
+		CV_Assert(!f.empty()); // emptyì¼ ê²½ìš° Error , ë‚´ë¶€ê°€ falseì¼ ê²½ìš°
 
 		image im = mat_to_image(f);
 
@@ -1046,17 +1047,17 @@ std::vector<iou_box> MY_ALGORITHM::Detect_Image_for_IOU(cv::Mat f)
 void MY_ALGORITHM::DetectFolder(char * folder)
 {
 	CStringList imageList;
-	//Æú´õ ³» ÆÄÀÏ ÀĞÀ½
+	//í´ë” ë‚´ íŒŒì¼ ì½ìŒ
 	CFileFind fileFinder;
 
 	CString cstrFolder(folder);
 	cstrFolder += _T("\\*.*");
 
-	//Train Æú´õ ¸ÕÀú ÀĞ±â
+	//Train í´ë” ë¨¼ì € ì½ê¸°
 	bool bExist = fileFinder.FindFile(cstrFolder);
 	while (bExist)
 	{
-		//´ÙÀ½ ÆÄÀÏÀÌ ÀÖÀ» °æ¿ì TRUE
+		//ë‹¤ìŒ íŒŒì¼ì´ ìˆì„ ê²½ìš° TRUE
 		bExist = fileFinder.FindNextFileW();
 
 		CString fileName = fileFinder.GetFileName();
@@ -1068,13 +1069,13 @@ void MY_ALGORITHM::DetectFolder(char * folder)
 		imageList.AddTail(fileName);
 	}
 
-	//ÀĞÀº °ªÀ» txt·Î ÀúÀå
+	//ì½ì€ ê°’ì„ txtë¡œ ì €ì¥
 	CFile fileSave;
 
 	//Train
 	if (!fileSave.Open(_T("iou_box.txt"), CFile::modeCreate | CFile::modeWrite))
 	{
-		AfxMessageBox(TEXT("iou_box.txt¸¦ »ı¼ºÇÏÁö ¸øÇß½À´Ï´Ù."));
+		AfxMessageBox(TEXT("iou_box.txtë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤."));
 	}
 
 
